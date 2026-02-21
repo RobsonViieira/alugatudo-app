@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/login.dart';
 
 void main() {
   runApp(const AlugaTudoApp());
@@ -12,27 +13,10 @@ class AlugaTudoApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AlugaTudo',
-      home: const HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('AlugaTudo'),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      body: const Center(
-        child: Text(
-          'Bem-vindo ao AlugaTudo 🚀',
-          style: TextStyle(fontSize: 22),
-        ),
-      ),
+      home: const LoginScreen(),
     );
   }
 }
