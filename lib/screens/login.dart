@@ -8,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login - AlugaTudo'),
+        title: const Text('AlugaTudo - Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const HomeScreen(),
