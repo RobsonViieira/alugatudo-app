@@ -1,77 +1,88 @@
 import 'package:flutter/material.dart';
 import 'add_item.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  final List<Map<String, String>> itens = [
+    {"nome": "PlayStation 5", "preco": "R\$ 50 / dia"},
+    {"nome": "Furadeira", "preco": "R\$ 15 / dia"},
+  ];
+
+  void adicionarItem(String nome, String preco) {
+    setState(() {
+      itens.add({
+        "nome": nome,
+        "preco": "R\$ $preco / dia"
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       appBar: AppBar(
         title: const Text('AlugaTudo'),
+
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
+
+            onPressed: () async {
+
+              final novoItem = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AddItemScreen(),
                 ),
               );
+
+              if (novoItem != null) {
+                adicionarItem(
+                  novoItem["nome"],
+                  novoItem["preco"],
+                );
+              }
             },
           ),
         ],
       ),
 
-      body: ListView(
+      body: ListView.builder(
+
         padding: const EdgeInsets.all(10),
-        children: const [
 
-          ItemCard(
-            nome: 'PlayStation 5',
-            preco: 'R\$ 50 / dia',
-          ),
+        itemCount: itens.length,
 
-          ItemCard(
-            nome: 'Furadeira',
-            preco: 'R\$ 15 / dia',
-          ),
+        itemBuilder: (context, index) {
 
-          ItemCard(
-            nome: 'Bicicleta',
-            preco: 'R\$ 20 / dia',
-          ),
-        ],
-      ),
-    );
-  }
-}
+          return Card(
 
-class ItemCard extends StatelessWidget {
+            margin: const EdgeInsets.only(bottom: 10),
 
-  final String nome;
-  final String preco;
+            child: ListTile(
 
-  const ItemCard({
-    super.key,
-    required this.nome,
-    required this.preco,
-  });
+              leading: const Icon(Icons.inventory),
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        leading: const Icon(Icons.inventory),
-        title: Text(nome),
-        subtitle: Text(preco),
-        trailing: ElevatedButton(
-          onPressed: () {},
-          child: const Text('Alugar'),
-        ),
+              title: Text(itens[index]["nome"]!),
+
+              subtitle: Text(itens[index]["preco"]!),
+
+              trailing: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Alugar'),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
