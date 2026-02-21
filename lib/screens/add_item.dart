@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AddItemScreen extends StatelessWidget {
+class AddItemScreen extends StatefulWidget {
   const AddItemScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<AddItemScreen> createState() => _AddItemScreenState();
+}
 
-    final nomeController = TextEditingController();
-    final precoController = TextEditingController();
+class _AddItemScreenState extends State<AddItemScreen> {
+
+  final nomeController = TextEditingController();
+  final precoController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
 
@@ -17,6 +23,7 @@ class AddItemScreen extends StatelessWidget {
 
       body: Padding(
         padding: const EdgeInsets.all(20),
+
         child: Column(
           children: [
 
@@ -42,13 +49,18 @@ class AddItemScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Item cadastrado (simulado) ✅'),
-                  ),
-                );
+                if (nomeController.text.isEmpty ||
+                    precoController.text.isEmpty) {
+                  return;
+                }
 
-                Navigator.pop(context);
+                Navigator.pop(
+                  context,
+                  {
+                    "nome": nomeController.text,
+                    "preco": precoController.text,
+                  },
+                );
               },
               child: const Text('Salvar'),
             ),
